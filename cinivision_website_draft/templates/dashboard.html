@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="contact-bg-wrapper" style="min-height: 100vh;">
+    <div class="container contact-main py-5">
+
+        <!-- BACK BUTTON -->
+        <a href="/" class="btn btn-outline-light mb-4">
+            <i class="fas fa-arrow-left me-2"></i> Back to Home
+        </a>
+
+        <!-- HEADER -->
+        <div class="mb-5 text-center">
+            <h1 class="text-warning fw-bold" style="font-family: 'Cinzel', serif;">Admin Dashboard</h1>
+            <p class="text-light">Manage CineVisions content and users</p>
+        </div>
+
+        <!-- DASHBOARD CARDS -->
+        <div class="row g-4 mb-5">
+
+            <!-- CONTACT REQUESTS -->
+            <div class="col-lg-3 col-md-6">
+                <div class="p-4 h-100 bg-dark border border-secondary rounded">
+                    <h5 class="text-white">Contact Requests</h5>
+                    <p class="text-light small">View customer enquiries</p>
+                    <a href="/admin/contacts" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                        View Requests
+                    </a>
+                </div>
+            </div>
+
+            <!-- REGISTERED USERS -->
+            <div class="col-lg-3 col-md-6">
+                <div class="p-4 h-100 bg-dark border border-secondary rounded">
+                    <h5 class="text-white">Registered Users</h5>
+                    <p class="text-light small">Manage user accounts</p>
+                    <a href="/users" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                        View Users
+                    </a>
+                </div>
+            </div>
+
+            <!-- UPLOADED MEDIA -->
+            <div class="col-lg-3 col-md-6">
+                <div class="p-4 h-100 bg-dark border border-secondary rounded">
+                    <h5 class="text-white">Uploaded Media</h5>
+                    <p class="text-light small">Manage portfolio content</p>
+                    <a href="/admin/media" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                        View Gallery
+                    </a>
+                </div>
+            </div>
+
+            <!-- RATINGS -->
+            <div class="col-lg-3 col-md-6">
+                <div class="p-4 h-100 bg-dark border border-secondary rounded">
+                    <h5 class="text-white">Ratings & Feedback</h5>
+                    <p class="text-light small">Customer reviews</p>
+                    <a href="/admin/ratings" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                        View Ratings
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- UPLOAD PORTFOLIO MEDIA SECTION -->
+        <div class="bg-dark border border-secondary rounded p-4 p-md-5">
+            <h3 class="text-warning mb-4" style="font-family: 'Cinzel', serif;">Upload Portfolio Media</h3>
+
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            {% if request.args.get('upload') == 'success' %}
+            <div class="alert alert-success">Media uploaded successfully!</div>
+            {% endif %}
+
+            <form action="/dashboard" method="POST" enctype="multipart/form-data">
+
+                <div class="row g-3">
+
+                    <!-- TITLE -->
+                    <div class="col-md-6">
+                        <label class="form-label text-light">Title</label>
+                        <input type="text" name="title" class="form-control bg-black text-light border-secondary"
+                            placeholder="e.g. Wedding Film, Baby Shoot" required>
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="col-md-6">
+                        <label class="form-label text-light">Category</label>
+                        <select name="category" class="form-select bg-black text-light border-secondary" required>
+                            <option value="">Select Category</option>
+                            <option value="Wedding">Wedding</option>
+                            <option value="Pre-Wedding">Pre-Wedding</option>
+                            <option value="Traditional">Traditional</option>
+                            <option value="Baby Shoot">Baby Shoot</option>
+                            <option value="Maternity">Maternity</option>
+                            <option value="Drone">Drone</option>
+                            <option value="Cinematic">Cinematic</option>
+                            <option value="Model">Model / Fashion</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- FILE -->
+                    <div class="col-md-12">
+                        <label class="form-label text-light">Upload Image / Video</label>
+                        <input type="file" name="file" class="form-control bg-black text-light border-secondary"
+                            required multiple>
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="col-md-12 mt-4">
+                        <button type="submit" class="btn btn-warning px-5 rounded-pill fw-bold">
+                            Upload Media
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

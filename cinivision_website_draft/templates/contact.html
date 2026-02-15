@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- Default light theme is used when no theme is specified -->
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== CONTACT HERO ===== -->
+<section class="contact-hero">
+  <div class="contact-hero-overlay">
+    <div class="contact-hero-overlay">
+      <h1>Contact <span style="color: #c0392b;">Us</span></h1>
+      <p>Let’s Create Something Timeless</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT MAIN ===== -->
+<section class="contact-bg-wrapper">
+  <div class="container contact-main">
+    <div class="row align-items-start">
+      <!-- LEFT CONTENT + QUICK CONTACT CARD -->
+      <div class="col-md-5 contact-info d-flex flex-column justify-content-start">
+        <div>
+          <span class="contact-tag">Get In Touch</span>
+          <h2>Let’s Create Something Beautiful.<br>Reach Out Today!</h2>
+          <ul class="contact-details">
+            <li>
+              <i class="fab fa-whatsapp"></i>
+              <span>+91 63614 82911</span>
+            </li>
+            <li>
+              <i class="fas fa-envelope"></i>
+              <span>gowdasuketh@gmail.com</span>
+            </li>
+            <li>
+              <i class="fas fa-location-dot"></i>
+              <span>
+                #X43G+4PJ, Ground Floor, Moorje Rayee Rd,<br>
+                Ajjibettu, Irvathur Bantwal, Mangaluru <br>
+                Dakshina Kannada, Karnataka – 574233
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-5">
+          <h3 class="mb-3" style="font-family: 'Cinzel', serif; color: #fff;">Contact CINEVISIONS</h3>
+          <p style="color: #b3b3b3;">
+            Ready to start your cinematic journey? Reach out to us directly for bookings and inquiries.
+          </p>
+          <div class="d-flex gap-3 mt-4">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/6361482911?text=Hello%20CINEVISIONS,%20I%20would%20like%20to%20enquire%20about%20your%20videography%20services."
+              class="btn btn-success rounded-pill px-4" target="_blank">
+              <i class="fab fa-whatsapp me-2"></i> WhatsApp
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/cinevisionx/" class="btn btn-danger rounded-pill px-4" target="_blank"
+              style="background: #E1306C; border: none;">
+              <i class="fab fa-instagram me-2"></i> Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT: CONTACT FORM -->
+      <div class="col-md-7">
+        <div class="auth-card-royal" style="max-width: 100%; margin: 0;">
+          <div class="auth-card-header mb-4">
+            <h2 class="auth-title text-center">Get a Custom Quote</h2>
+            <p class="auth-subtitle text-center">Tell us about your dream project</p>
+          </div>
+          <form method="POST" action="/contact">
+            <!-- Name -->
+            <div class="royal-form-group">
+              <label class="royal-label">Your Name</label>
+              <div class="royal-input-wrap">
+                <i class="fas fa-user royal-icon"></i>
+                <input type="text" name="name" class="royal-input" placeholder="Full Name" required>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="royal-form-group">
+              <label class="royal-label">Phone Number</label>
+              <div class="royal-input-wrap">
+                <i class="fas fa-phone royal-icon"></i>
+                <input type="tel" name="phone" class="royal-input" placeholder="10-digit number" pattern="[0-9]{10}"
+                  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  title="Please enter exactly 10 digits" required>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="royal-form-group">
+              <label class="royal-label">Email (Optional)</label>
+              <div class="royal-input-wrap">
+                <i class="fas fa-envelope royal-icon"></i>
+                <input type="email" name="email" class="royal-input" placeholder="name@example.com">
+              </div>
+            </div>
+
+            <!-- Event Type -->
+            <div class="royal-form-group">
+              <label class="royal-label">Event Type</label>
+              <div class="royal-input-wrap">
+                <i class="fas fa-camera royal-icon"></i>
+                <select name="event_type" class="royal-input" style="background: transparent; color: #fff;" required>
+                  <option value="" style="color: #000;">Select Event</option>
+                  <option value="Wedding" style="color: #000;">Wedding</option>
+                  <option value="Pre-Wedding" style="color: #000;">Pre-Wedding</option>
+                  <option value="Baby Shower" style="color: #000;">Baby Shower</option>
+                  <option value="Maternity" style="color: #000;">Maternity</option>
+                  <option value="Model Shoot" style="color: #000;">Model Shoot</option>
+                  <option value="Drone Shoot" style="color: #000;">Drone Shoot</option>
+                  <option value="Other" style="color: #000;">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Event Date -->
+            <div class="royal-form-group">
+              <label class="royal-label">Event Date</label>
+              <div class="royal-input-wrap">
+                <i class="fas fa-calendar royal-icon"></i>
+                <!-- Changed to text so Flatpickr handles UI entirely -->
+                <input type="text" id="eventDatePicker" name="event_date" class="royal-input"
+                  placeholder="Select Date..." required>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="royal-form-group">
+              <label class="royal-label">Additional Details</label>
+              <div class="royal-input-wrap" style="align-items: flex-start; padding-top: 10px;">
+                <i class="fas fa-pen royal-icon" style="margin-top: 5px;"></i>
+                <textarea name="message" rows="3" class="royal-input" placeholder="Tell us more..."></textarea>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="royal-btn mt-3">
+              Submit Enquiry <i class="fas fa-paper-plane ms-2"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- RATING SECTION INTEGRATED -->
+    <div class="container text-center mt-5 pt-5" id="feedback"
+      style="position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.1);">
+      <h3 class="rating-title">Share Your Experience😊</h3>
+      <p class="rating-subtitle">We’d love your honest feedback 💛</p>
+
+      <form method="POST" action="/submit-rating">
+        <input type="hidden" name="rating" id="ratingValue" required>
+
+        <div class="emoji-rating">
+          <span data-value="1">😡</span>
+          <span data-value="2">😕</span>
+          <span data-value="3">😐</span>
+          <span data-value="4">😊</span>
+          <span data-value="5">😍</span>
+        </div>
+
+        <div class="mt-4">
+          <textarea name="feedback" class="form-control feedback-box" rows="4"
+            placeholder="Tell us what you loved or what we can improve..."
+            style="max-width: 600px; margin: 0 auto;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-warning mt-3 px-4">
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+
+  </div> <!-- Close container contact-main (optional, or keep generic container) -->
+  </div> <!-- Close row (if nested inside row, but rating is full width usually) -->
+  </div> <!-- Extra close check -->
+</section>
+
+
+
+
+<!-- ===== MAP SECTION ===== -->
+<!-- ===== MAP SECTION ===== -->
+<section class="contact-map">
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps?q=12.952837,75.1267776&hl=en&z=17&output=embed" allowfullscreen=""
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+
+<!-- ===== SUCCESS MODAL ===== -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #1a1a1a; border: 1px solid rgba(255,215,0,0.3); color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h5 class="modal-title" style="font-family: 'Cinzel', serif; color: var(--primary);">Notification</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="fas fa-check-circle text-success mb-3" style="font-size: 3rem;"></i>
+        <h4 id="modalMessage" style="font-family: 'Playfair Display', serif;"></h4>
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1); justify-content: center;">
+        <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var myModal = new bootstrap.Modal(document.getElementById('statusModal'));
+    var category = "{{ messages[0][0] }}";
+    var msg = "{{ messages[0][1] }}";
+
+    var icon = document.querySelector('#statusModal .modal-body i');
+    if (category === 'danger' || category === 'error') {
+      icon.className = 'fas fa-exclamation-circle text-danger mb-3';
+    } else {
+      icon.className = 'fas fa-check-circle text-success mb-3';
+    }
+
+    document.getElementById('modalMessage').innerText = msg;
+    myModal.show();
+  });
+</script>
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    flatpickr("#eventDatePicker", {
+      dateFormat: "Y-m-d",
+      altInput: true,
+      altFormat: "F j, Y",
+      minDate: "today",
+      altInputClass: "royal-input"
+    });
+  });
+</script>
+{% endblock %}

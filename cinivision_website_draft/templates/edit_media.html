@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Edit Media</h2>
+
+<form method="post" class="col-md-6">
+
+  <input name="title"
+         class="form-control mb-2"
+         value="{{ media.title }}"
+         required>
+
+  <select name="category" class="form-control mb-3">
+    <option selected>{{ media.category }}</option>
+    <option>Wedding</option>
+    <option>Pre-Wedding</option>
+    <option>Baby Shoot</option>
+    <option>Maternity Shoot</option>
+    <option>Family Portrait</option>
+    <option>Drone Videography</option>
+    <option>Cinematic Shoot</option>
+    <option>Traditional Shoot</option>
+    <option>Commercial</option>
+  </select>
+
+  <button class="btn btn-warning">Update</button>
+  <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+{% endblock %}

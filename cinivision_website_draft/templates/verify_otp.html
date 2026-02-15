@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-page-wrapper">
+    <div class="auth-card-royal">
+        <div class="auth-card-header">
+            <img src="{{ url_for('static', filename='images/Cine visions logo 002.png') }}" alt="CineVisions Logo"
+                style="width: 60px; margin-bottom: 10px;">
+            <h2 class="auth-title">Verify OTP</h2>
+            <p class="auth-subtitle">Enter the OTP sent to your email</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} py-2">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="auth-form-container active" style="display: block;">
+            <form action="/verify-otp" method="POST">
+                <div class="royal-form-group">
+                    <label class="royal-label">OTP Code</label>
+                    <div class="royal-input-wrap">
+                        <i class="fas fa-lock royal-icon"></i>
+                        <input type="text" name="otp" class="royal-input" placeholder="123456" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="royal-btn">
+                    Verify OTP <i class="fas fa-check-circle"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

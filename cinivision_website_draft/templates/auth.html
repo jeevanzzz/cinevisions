@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-page-wrapper">
+  <div class="auth-card-royal">
+
+    <!-- HEADER -->
+    <div class="auth-card-header">
+      <img src="{{ url_for('static', filename='images/Cine visions logo 002.png') }}" alt="CineVisions Logo"
+        style="width: 80px; margin-bottom: 10px;">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Sign in to your account</p>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger py-2" style="font-size: 0.9rem;">
+      {{ error }}
+    </div>
+    {% endif %}
+
+    {% if request.args.get('registered') %}
+    <div class="alert alert-success py-2" style="font-size: 0.9rem;">
+      Account created! Please login.
+    </div>
+    {% endif %}
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab-btn {{ 'active' if active_tab == 'login' else '' }}"
+        onclick="openTab(event, 'login')">Login</button>
+      <button class="auth-tab-btn {{ 'active' if active_tab == 'register' else '' }}"
+        onclick="openTab(event, 'register')">Register</button>
+    </div>
+
+    <!-- USER/ADMIN LOGIN FORM -->
+    <div id="login" class="auth-form-container {{ 'active' if active_tab == 'login' else '' }}">
+      <form action="/auth" method="POST">
+        <input type="hidden" name="action" value="login">
+
+        <div class="royal-form-group">
+          <label class="royal-label">Email or Username</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-user royal-icon"></i>
+            <input type="text" name="email" class="royal-input" placeholder="admin or you@email.com" required>
+          </div>
+        </div>
+
+        <div class="royal-form-group">
+          <label class="royal-label">Password</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-lock royal-icon"></i>
+            <input type="password" name="password" id="userPass" class="royal-input" placeholder="••••••••" required>
+            <i class="fas fa-eye royal-eye" onclick="togglePass('userPass')"></i>
+          </div>
+        </div>
+
+        <div class="text-end mb-3">
+          <a href="/forgot-password" style="font-size: 0.85rem; color: #666;">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="royal-btn">
+          Sign In <i class="fas fa-arrow-right"></i>
+        </button>
+
+
+
+      </form>
+    </div>
+
+
+    <!-- USER REGISTER FORM -->
+    <div id="register" class="auth-form-container {{ 'active' if active_tab == 'register' else '' }}">
+      <form action="/auth" method="POST" id="registerForm" onsubmit="return validateRegister()">
+        <input type="hidden" name="action" value="register">
+
+        <div class="royal-form-group">
+          <label class="royal-label">Full Name</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-user royal-icon"></i>
+            <input type="text" name="name" id="regName" class="royal-input" placeholder="Your Name" required>
+          </div>
+        </div>
+
+        <div class="royal-form-group">
+          <label class="royal-label">Email Address</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-envelope royal-icon"></i>
+            <input type="email" name="email" id="regEmail" class="royal-input" placeholder="you@email.com" required>
+          </div>
+        </div>
+
+        <div class="royal-form-group">
+          <label class="royal-label">Password</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-lock royal-icon"></i>
+            <input type="password" name="password" id="regPass" class="royal-input" placeholder="Strong Password"
+              required>
+            <i class="fas fa-eye royal-eye" onclick="togglePass('regPass')"></i>
+          </div>
+        </div>
+
+        <div class="royal-form-group">
+          <label class="royal-label">Confirm Password</label>
+          <div class="royal-input-wrap">
+            <i class="fas fa-lock royal-icon"></i>
+            <input type="password" name="confirm_password" id="regConfirmPass" class="royal-input"
+              placeholder="Confirm Password" required>
+            <i class="fas fa-eye royal-eye" onclick="togglePass('regConfirmPass')"></i>
+          </div>
+        </div>
+
+        <div id="registerError" class="text-danger mt-2" style="font-size: 0.9rem; display: none;"></div>
+
+        <button type="submit" class="royal-btn">
+          Create Account
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("auth-form-container");
+    for (i = 0; i < x.length; i++) {
+      x[i].classList.remove("active");
+      x[i].style.display = "none"; // Hard hide for animation reset
+    }
+    tablinks = document.getElementsByClassName("auth-tab-btn");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    setTimeout(() => {
+      document.getElementById(tabName).classList.add("active");
+    }, 10);
+    evt.currentTarget.className += " active";
+  }
+
+  // Initial State Fix if mixed display properties
+  document.addEventListener("DOMContentLoaded", function () {
+    const activeTab = document.querySelector(".auth-form-container.active");
+    if (activeTab) activeTab.style.display = "block";
+  });
+
+  function togglePass(id) {
+    var x = document.getElementById(id);
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  // Validation Logic
+  function validateRegister() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPass').value;
+    const confirmPass = document.getElementById('regConfirmPass').value;
+    const errorDiv = document.getElementById('registerError');
+
+    errorDiv.style.display = 'none';
+    errorDiv.innerText = '';
+
+    // Name Validation
+    if (name.length < 2) {
+      errorDiv.innerText = "Please enter a valid full name.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+
+    // Email Validation (Basic Regex)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      errorDiv.innerText = "Please enter a valid email address.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+
+    // Password Validation
+    if (pass.length < 8) {
+      errorDiv.innerText = "Password must be at least 8 characters long.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+    if (!/[A-Z]/.test(pass)) {
+      errorDiv.innerText = "Password must contain at least one uppercase letter.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+    if (!/[a-z]/.test(pass)) {
+      errorDiv.innerText = "Password must contain at least one lowercase letter.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+    if (!/\d/.test(pass)) {
+      errorDiv.innerText = "Password must contain at least one number.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+    if (!/[@$!%*?&#]/.test(pass)) {
+      errorDiv.innerText = "Password must contain at least one special character (@$!%*?&#).";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+
+    // Confirm Password
+    if (pass !== confirmPass) {
+      errorDiv.innerText = "Passwords do not match.";
+      errorDiv.style.display = 'block';
+      return false;
+    }
+
+    return true;
+  }
+</script>
+
+{% endblock %}

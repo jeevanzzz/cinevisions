@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css') }}">
+<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<!-- VOK STYLE PORTFOLIO HERO -->
+<section class="vok-hero text-center py-5">
+    <div class="container mt-5">
+        <h1 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+            Visual Stories <br>
+            <span style="color: #c0392b;">We’ve Captured</span>
+        </h1>
+        <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+            A curated collection of our favorite moments — from breathtaking landscapes to
+            intimate portraits. Step into our world through the lens and experience the stories we’ve captured.
+        </p>
+    </div>
+</section>
+
+<!-- FILTER BUTTONS (Single Line, Sticky?) -->
+<section class="portfolio-filters py-4 sticky-top bg-black z-3 border-bottom border-dark">
+    <div class="container overflow-auto">
+        <div class="d-flex flex-nowrap justify-content-center gap-3" style="padding-bottom: 5px;">
+            <!-- Using anchor links to smooth scroll to sections -->
+            <a href="#marquee-highlight" class="btn btn-outline-light rounded-pill px-4 active-filter">All</a>
+            <a href="#wedding-gallery" class="btn btn-outline-light rounded-pill px-4">Wedding</a>
+            <a href="#pre-wedding-gallery" class="btn btn-outline-light rounded-pill px-4">Pre-Wedding</a>
+            <a href="#model-gallery" class="btn btn-outline-light rounded-pill px-4">Model</a>
+            <a href="#cinematic-gallery" class="btn btn-outline-light rounded-pill px-4">Cinematic</a>
+            <a href="#baby-gallery" class="btn btn-outline-light rounded-pill px-4">Baby Shoot</a>
+            <a href="#cultural-gallery" class="btn btn-outline-light rounded-pill px-4">Cultural</a>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE HIGHLIGHT (ALL) -->
+<section id="marquee-highlight" class="vok-gallery-section pt-5" style="overflow: hidden; padding-bottom: 50px;">
+    <!-- Functionality: Infinite scroll of random mix -->
+
+    <!-- ROW 1: IMAGES (Scroll Left) -->
+    <div class="marquee-row mb-4">
+        <div class="marquee-content scroll-left">
+            {% for _ in range(2) %}
+            {% for img in marquee_images[:15] %}
+            <div class="marquee-item">
+                <img src="{{ url_for('static', filename=img.path) }}" loading="lazy" alt="Portfolio">
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ROW 2: IMAGES (Scroll Right) -->
+    <div class="marquee-row mb-4">
+        <div class="marquee-content scroll-right">
+            {% for _ in range(2) %}
+            {% for img in marquee_images[15:30] if loop.index < 15 %} <div class="marquee-item">
+                <img src="{{ url_for('static', filename=img.path) }}" loading="lazy" alt="Portfolio">
+        </div>
+        {% else %}
+        <!-- Fallback if not enough images, repeat first batch -->
+        {% for img in marquee_images[:10] %}
+        <div class="marquee-item">
+            <img src="{{ url_for('static', filename=img) }}" loading="lazy" alt="Portfolio">
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+    </div>
+
+    <!-- ROW 3: IMAGES (Scroll Left) -->
+    <div class="marquee-row">
+        <div class="marquee-content scroll-left">
+            {% for _ in range(2) %}
+            {% for img in marquee_images|reverse %}
+            <div class="marquee-item">
+                <img src="{{ url_for('static', filename=img.path) }}" loading="lazy" alt="Portfolio">
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= GALLERY SECTIONS ================= -->
+
+
+<!-- 1. WEDDING GALLERY -->
+<section id="wedding-gallery" class="gallery-block py-5">
+    <div class="container-fluid px-5">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Wedding <span style="color: #c0392b;">Gallery</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Every love story is beautiful, but yours is our favorite to tell."
+            </p>
+        </div>
+
+        <div class="row g-3 masonry-grid">
+            {% for item in categories['wedding'] %}
+            <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+                <div class="gallery-card portfolio-trigger mb-3" data-src="{{ url_for('static', filename=item.path) }}"
+                    data-type="{{ item.media_type }}">
+                    {% if item.media_type == 'video' %}
+                    <div class="video-preview-wrapper position-relative">
+                        <video src="{{ url_for('static', filename=item.path) }}" muted loop
+                            class="img-fluid rounded"></video>
+                        <div class="play-icon-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    {% else %}
+                    <img src="{{ url_for('static', filename=item.path) }}" class="img-fluid rounded" loading="lazy">
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center text-muted">
+                <p>No wedding stories uploaded yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 2. PRE-WEDDING GALLERY -->
+<section id="pre-wedding-gallery" class="gallery-block py-5 bg-darker">
+    <div class="container-fluid px-5">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Pre-Wedding <span style="color: #c0392b;">Gallery</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Capturing the excitement and romance before the big day begins."
+            </p>
+        </div>
+        <div class="row g-3 masonry-grid">
+            {% for item in categories['pre_wedding'] %}
+            <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+                <div class="gallery-card portfolio-trigger mb-3" data-src="{{ url_for('static', filename=item.path) }}"
+                    data-type="{{ item.media_type }}">
+                    <img src="{{ url_for('static', filename=item.path) }}" class="img-fluid rounded" loading="lazy">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 3. MODEL SHOOT -->
+<section id="model-gallery" class="gallery-block py-5">
+    <div class="container-fluid px-5">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Model <span style="color: #c0392b;">Shoots</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Fashion fades, but style is eternal. We capture the essence of you."
+            </p>
+        </div>
+        <div class="row g-3 masonry-grid">
+            {% for item in categories['model'] %}
+            <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+                <div class="gallery-card portfolio-trigger mb-3" data-src="{{ url_for('static', filename=item.path) }}"
+                    data-type="{{ item.media_type }}">
+                    <img src="{{ url_for('static', filename=item.path) }}" class="img-fluid rounded" loading="lazy">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 4. CINEMATIC VIDEO GALLERY (MARQUEE SCROLL) -->
+<section id="cinematic-gallery" class="gallery-block py-5 bg-darker">
+    <div class="container-fluid">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Cinematic <span style="color: #c0392b;">Films</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Stories told through motion, emotion, and cinematic brilliance."
+            </p>
+        </div>
+
+        <!-- Scrolling Video Strip -->
+        <div class="marquee-row video-marquee">
+            <div class="marquee-content scroll-left">
+                {% for item in categories['cinematic'] %}
+                <div class="marquee-item video-card portfolio-trigger"
+                    data-src="{{ url_for('static', filename=item.path) }}" data-type="video">
+                    <video muted autoplay loop playsinline preload="metadata">
+                        <source src="{{ url_for('static', filename=item.path) }}">
+                    </video>
+                    <div class="play-overlay-center"><i class="fas fa-play"></i></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. BABY SHOOT -->
+<section id="baby-gallery" class="gallery-block py-5">
+    <div class="container-fluid px-5">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Baby <span style="color: #c0392b;">Shoots</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Tiny feet, big dreams, and moments of pure innocence."
+            </p>
+        </div>
+        <div class="row g-3 masonry-grid">
+            {% for item in categories['baby_shoot'] %}
+            <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+                <div class="gallery-card portfolio-trigger mb-3" data-src="{{ url_for('static', filename=item.path) }}"
+                    data-type="{{ item.media_type }}">
+                    <img src="{{ url_for('static', filename=item.path) }}" class="img-fluid rounded" loading="lazy">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 6. CULTURAL -->
+<section id="cultural-gallery" class="gallery-block py-5 bg-darker">
+    <div class="container-fluid px-5">
+        <div class="gallery-header mb-5 text-center">
+            <h2 class="display-3 fw-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">
+                Cultural <span style="color: #c0392b;">Gallery</span>
+            </h2>
+            <p class="text-secondary lead mx-auto" style="max-width: 700px;">
+                "Honoring traditions and the colorful tapestry of life’s celebrations."
+            </p>
+        </div>
+        <div class="row g-3 masonry-grid">
+            {% for item in categories['cultural'] %}
+            <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+                <div class="gallery-card portfolio-trigger mb-3" data-src="{{ url_for('static', filename=item.path) }}"
+                    data-type="{{ item.media_type }}">
+                    <img src="{{ url_for('static', filename=item.path) }}" class="img-fluid rounded" loading="lazy">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- GLOBAL LIGHTBOX MODAL -->
+<div class="modal fade" id="galleryLightbox" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-transparent border-0">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-4 z-3"
+                data-bs-dismiss="modal"></button>
+            <div class="modal-body p-0 text-center position-relative d-flex align-items-center justify-content-center"
+                style="height: 90vh;">
+
+                <!-- Navigation -->
+                <button class="nav-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+
+                <div id="lightboxContent" class="w-100 h-100 d-flex align-items-center justify-content-center">
+                    <!-- Image or Video injected here -->
+                </div>
+
+                <button class="nav-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // ================= MARQUEE LOGIC =================
+        // Select ALL marquee rows dynamically
+        const marqueeRows = document.querySelectorAll('.marquee-content');
+        const rows = [];
+
+        marqueeRows.forEach((el, index) => {
+            // Default directions: Alternate left/right/left/right...
+            // Or use specific data attributes if we wanted more control
+            // Row 1 (index 0): Left
+            // Row 2 (index 1): Right
+            // Row 3 (index 2): Left
+            // Row 4 (Cinematic, index 3): Left (as requested)
+
+            let dir = 'left';
+            let spd = 1.0;
+
+            if (index === 1) { dir = 'right'; spd = 0.8; }
+            if (index === 2) { spd = 1.2; }
+            if (index === 3) { spd = 1.5; } // Cinematic faster? or standard
+
+            rows.push({ el: el, speed: spd, direction: dir });
+        });
+
+        rows.forEach(row => {
+            if (!row.el) return;
+
+            // Clone content to ensure smooth infinite loop
+            const originalContent = row.el.innerHTML;
+            row.el.innerHTML += originalContent + originalContent; // Triple content
+
+            let x = 0;
+            let isHovered = false;
+
+            function animate() {
+                if (!isHovered) {
+                    const totalWidth = row.el.scrollWidth;
+                    const oneThird = totalWidth / 3;
+
+                    if (row.direction === 'left') {
+                        x -= row.speed;
+                        if (Math.abs(x) >= oneThird) {
+                            x = 0;
+                        }
+                    } else {
+                        x += row.speed;
+                        if (x >= 0) {
+                            x = -oneThird;
+                        }
+                    }
+
+                    row.el.style.transform = `translateX(${x}px)`;
+                }
+                requestAnimationFrame(animate);
+            }
+
+            if (row.direction === 'right') {
+                x = -2000; // Offset start
+            }
+
+            row.el.addEventListener('mouseenter', () => isHovered = true);
+            row.el.addEventListener('mouseleave', () => isHovered = false);
+            row.el.addEventListener('touchstart', () => isHovered = true);
+            row.el.addEventListener('touchend', () => isHovered = false);
+
+            animate();
+        });
+
+        // ================= LIGHTBOX LOGIC =================
+        const lightboxModal = new bootstrap.Modal(document.getElementById('galleryLightbox'));
+        const contentContainer = document.getElementById('lightboxContent');
+
+        // Collect all trigger items across all galleries
+        let galleryItems = [];
+        // We re-query on click or init? Init is better for perf, but careful with clones.
+        // Actually, we should just query valid triggers. Marquee clones might duplicate items, 
+        // which is fine, but navigation might feel weird if you scroll through 100 duplicates.
+        // Let's query distinct triggers or just all present in DOM.
+
+        const triggers = document.querySelectorAll('.portfolio-trigger');
+        triggers.forEach((t, i) => {
+            t.dataset.index = i; // Store index for traversal
+            galleryItems.push({
+                src: t.getAttribute('data-src'),
+                type: t.getAttribute('data-type'),
+                title: t.querySelector('h5') ? t.querySelector('h5').innerText : ''
+            });
+        });
+
+        let currentIndex = 0;
+
+        function showItem(index) {
+            if (index < 0) index = galleryItems.length - 1;
+            if (index >= galleryItems.length) index = 0;
+            currentIndex = index;
+
+            const item = galleryItems[currentIndex];
+            contentContainer.innerHTML = ''; // Clear prev
+
+            if (item.type === 'video') {
+                const videoParam = document.createElement('video');
+                videoParam.src = item.src;
+                videoParam.controls = true;
+                videoParam.autoplay = true;
+                videoParam.className = "img-fluid rounded";
+                videoParam.style.maxHeight = "85vh";
+                videoParam.style.maxWidth = "100%";
+                contentContainer.appendChild(videoParam);
+            } else {
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "img-fluid rounded shadow-lg";
+                img.style.maxHeight = "85vh";
+                contentContainer.appendChild(img);
+            }
+        }
+
+        // Open Lightbox
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function () {
+                // If this is a cloned item in marquee, accessing dataset.index might be tricky 
+                // because we added clones AFTER triggers query? 
+                // No, clones happened above in 'rows.forEach'. 
+                // Wait! 'triggers' query happens AFTER cloning?
+                // Yes, because this code block is after the clone logic.
+                // So cloned items WILL have listeners if we attach them now. 
+                // Wait. `rows` loop ran first. `row.el.innerHTML += ...` changes DOM.
+                // Any previous listeners on original items would be lost if we did replacements, 
+                // but we haven't attached listeners yet.
+                // So querying NOW is correct.
+
+                // However, clones don't have unique data-src. They share it.
+                // We just want to open *that* item. 
+                // Let's find its index in our galleryItems list based on src? 
+                // Or just use the loop index.
+
+                const idx = parseInt(this.dataset.index); // Might be NaN if clone logic messed up attributes?
+                // Actually, innerHTML += str nukes event listeners and re-creates elements.
+                // So we must re-query triggers AFTER the cloning loop.
+                // My code order is correct (cloning first, then triggers query).
+
+                showItem(idx);
+                lightboxModal.show();
+            });
+        });
+
+        // Controls
+        document.querySelector('.prev-arrow').addEventListener('click', () => showItem(currentIndex - 1));
+        document.querySelector('.next-arrow').addEventListener('click', () => showItem(currentIndex + 1));
+
+        // Keyboard Support
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('galleryLightbox').classList.contains('show')) return;
+            if (e.key === 'ArrowLeft') showItem(currentIndex - 1);
+            if (e.key === 'ArrowRight') showItem(currentIndex + 1);
+            if (e.key === 'Escape') lightboxModal.hide();
+        });
+
+        // ================= MASONRY INIT =================
+        var grids = document.querySelectorAll('.masonry-grid');
+        grids.forEach(function (grid) {
+            imagesLoaded(grid, function () {
+                new Masonry(grid, {
+                    itemSelector: '.grid-item',
+                    percentPosition: true
+                });
+            });
+        });
+
+        // Pass pause to background videos when lightbox open? Optional.
+    });
+</script>
+
+<!-- Dynamic Scroll Button -->
+<button id="toggleScrollBtn" aria-label="Scroll to bottom">
+    <i class="fas fa-arrow-down"></i>
+</button>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- portfolio.js removed as it does not exist -->
+{% endblock %}

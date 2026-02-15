@@ -1,0 +1,257 @@
+/* =========================================
+   PORTFOLIO PAGE STYLES
+   ========================================= */
+
+/* --- HERO SECTION --- */
+.portfolio-hero {
+    padding: 160px 0 80px;
+    background: linear-gradient(to bottom, #000000, #1a1a1a);
+    color: #fff;
+    text-align: center;
+}
+
+.portfolio-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.portfolio-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- FILTERS --- */
+.filters-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(245, 197, 24, 0.3);
+}
+
+/* =========================================
+   PORTFOLIO PAGE STYLES (UPDATED)
+   ========================================= */
+
+/* --- HERO SECTION --- */
+.portfolio-hero {
+    padding: 160px 0 80px;
+    background: linear-gradient(to bottom, #000000, #1a1a1a);
+    color: #fff;
+    text-align: center;
+}
+
+/* ... existing hero styles ... */
+
+/* --- MASONRY GRID (TIGHT) --- */
+.masonry-grid {
+    /* No special style on container, bootstrap row handles it */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Custom Grid Item for tighter VOK look */
+.grid-item {
+    padding: 5px;
+    /* Minimal padding */
+}
+
+/* Force images to fill width */
+.gallery-card {
+    border-radius: 4px;
+    /* Slight rounded */
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0;
+    /* Remove bottom margin to stack tight */
+}
+
+.gallery-card img,
+.gallery-card video {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+/* Hover Effect: Brighten or slight Zoom? User said 'vok production' */
+.gallery-card:hover img {
+    filter: brightness(1.1);
+}
+
+/* Remove Overlay/Captions per user request */
+.gallery-overlay {
+    display: none !important;
+}
+
+/* Ensure no huge gaps from Bootstrap gutters */
+.row.g-3 {
+    --bs-gutter-x: 10px;
+    --bs-gutter-y: 10px;
+}
+
+/* --- VIDEO MARQUEE UPDATED --- */
+/* --- MARQUEE (SHARED) --- */
+.marquee-row {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    background: #000;
+}
+
+.marquee-content {
+    display: inline-flex;
+    gap: 20px;
+    will-change: transform;
+}
+
+.marquee-item {
+    flex: 0 0 auto;
+    width: 400px;
+    height: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #111;
+}
+
+.marquee-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.marquee-item video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.marquee-item:hover img,
+.marquee-item:hover video {
+    transform: scale(1.05);
+}
+
+/* --- CINEMATIC VIDEO MARQUEE SPECIFIC --- */
+.video-marquee {
+    margin-top: 30px;
+    width: 100%;
+    height: 280px;
+    /* Reduced Height */
+    overflow: hidden;
+    background: transparent;
+    padding: 20px 0;
+}
+
+.video-marquee .marquee-item {
+    width: 400px;
+    /* Reduced Width */
+    height: 100%;
+    margin-right: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #000;
+    /* Ensure black bg */
+}
+
+.video-marquee .marquee-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(192, 57, 43, 0.4);
+}
+
+.video-marquee video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.video-marquee .marquee-item:hover video {
+    opacity: 1;
+}
+
+.play-overlay-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.play-overlay-center i {
+    margin-left: 5px;
+}
+
+.video-marquee .marquee-item:hover .play-overlay-center {
+    background: #c0392b;
+    border-color: #c0392b;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 768px) {
+    .marquee-item {
+        width: 280px;
+        height: 200px;
+    }
+
+    .video-marquee {
+        height: 220px;
+    }
+
+    .video-marquee .marquee-item {
+        width: 300px;
+        /* Smaller on mobile */
+        max-width: 90vw;
+        /* Ensure it fits */
+        margin-right: 15px;
+    }
+}
